@@ -1,3 +1,7 @@
+# ADDR Current sensor ADC 0x48, using AIN1 and AIN0 as inputs under board.
+#
+# ADDR Vibration Sensor ADC 0x49
+
 import board
 import busio
 import csv
@@ -26,8 +30,11 @@ ads.mode = Mode.CONTINUOUS
 currentClamp = AnalogIn(ads, ADS.P0, ADS.P1)
 vibrationSensor = AnalogIn(ads, ADS.P2)
 
-with open("/mnt/data/testing/voltage_test4.csv", "a") as log:
+with open("/mnt/data/testing/voltage_test5.csv", "a") as log:
     while True:
         log.write("{0}\n".format(currentClamp.voltage))
-        print(currentClamp.voltage)
+
+        # You can enable print for testing purposes
+        #print(currentClamp.voltage)
+
         # log.write("{0},{1},{2},{3}\n".format(strftime("%Y-%m-%d %H:%M:%S"), str(temp), currentClamp.value, vibrationSensor.value))
