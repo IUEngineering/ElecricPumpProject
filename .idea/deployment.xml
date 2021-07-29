@@ -5,7 +5,7 @@
       <paths name="pi@raspberrypi:22">
         <serverdata>
           <mappings>
-            <mapping deploy="/tmp/pycharm_project_227" local="$PROJECT_DIR$" />
+            <mapping deploy="home/pi/folderProjectRoot" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
