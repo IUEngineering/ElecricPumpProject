@@ -26,14 +26,23 @@ ads = ADS.ADS1115(i2c, data_rate=860)
 
 ads.mode = Mode.CONTINUOUS
 
+# Create second ADC
+ads2 = ADS.ADS1115(i2c, address=0x49, data_rate=860)
+
+# Configure second ADS
+ads2.mode = Mode.CONTINUOUS
+
 # Create single-ended input on channel 0
 currentClamp = AnalogIn(ads, ADS.P0, ADS.P1)
-vibrationSensor = AnalogIn(ads, ADS.P2)
+vibrationSensor = AnalogIn(ads2, ADS.P0)
 
-with open("/mnt/data/testing/voltage_test5.csv", "a") as log:
+
+
+with open("/mnt/data/testing/vibration_test4.csv", "a") as log:
     while True:
-        log.write("{0}\n".format(currentClamp.voltage))
-
+        #log.write("{0}\n".format(currentClamp.voltage))
+        log.write("{0}\n".format(vibrationSensor.voltage))
+        print(vibrationSensor.voltage)
         # You can enable print for testing purposes
         #print(currentClamp.voltage)
 
