@@ -17,13 +17,13 @@ writer = csv.writer(f)
 i2c = busio.I2C(board.SCL, board.SDA)
 
 # Create an ADC object using the I2C bus
-ads = ADS.ADS1015(i2c, data_rate=3300)
+ads = ADS.ADS1015(i2c, data_rate=490, gain=1)
 
 # Create single-ended input on channel 0
 currentClamp = AnalogIn(ads, ADS.P0, ADS.P1)
 vibrationSensor = AnalogIn(ads, ADS.P2)
 
-with open("/mnt/data/testing/test_sleep.csv", "a") as log:
+with open("/mnt/data/testing/voltage_opamp_490_1_no_cap.csv", "a") as log:
     while True:
         log.write("{0}\n".format(currentClamp.value))
         # log.write("{0},{1},{2},{3}\n".format(strftime("%Y-%m-%d %H:%M:%S"), str(temp), currentClamp.value, vibrationSensor.value))
