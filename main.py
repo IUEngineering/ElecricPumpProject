@@ -5,7 +5,7 @@
 import board
 import busio
 import csv
-import time
+from datetime import datetime
 
 # Voor nu van Adafruit binnenkort even zelf aanpassen
 import adafruit_ads1x15.ads1115 as ADS
@@ -38,7 +38,7 @@ vibrationSensor = AnalogIn(ads2, ADS.P0)
 
 
 
-with open("/mnt/data/testing/vibration_test4.csv", "a") as log:
+with open("/mnt/data/testing/final_tests2.csv", "a") as log:
     while True:
         #log.write("{0}\n".format(currentClamp.voltage))
         log.write("{0}\n".format(vibrationSensor.voltage))
@@ -46,4 +46,4 @@ with open("/mnt/data/testing/vibration_test4.csv", "a") as log:
         # You can enable print for testing purposes
         #print(currentClamp.voltage)
 
-        # log.write("{0},{1},{2},{3}\n".format(strftime("%Y-%m-%d %H:%M:%S"), str(temp), currentClamp.value, vibrationSensor.value))
+        log.write("{0},{1},{2}\n".format(datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3], currentClamp.voltage, vibrationSensor.voltage))
