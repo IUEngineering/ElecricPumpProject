@@ -38,6 +38,7 @@ vibrationSensor = AnalogIn(ads2, ADS.P0)
 
 
 with open("/mnt/data/data.csv", "a") as log:
+    log.write("{0},{1}\n".format("START", datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
     while True:
         #log.write("{0}\n".format(currentClamp.voltage))
         log.write("{0}\n".format(vibrationSensor.voltage))
