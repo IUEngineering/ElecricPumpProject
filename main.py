@@ -6,12 +6,13 @@ import busio
 import csv
 from datetime import datetime
 import time
-
+import os
 # Voor nu van Adafruit binnenkort even zelf aanpassen
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 from adafruit_ads1x15.ads1115 import Mode
-from zippernamechanger import newName, zipFilesInDir
+from namechanger import newName
+from pytz import timezone
 
 
 # # open the file in the write mode
@@ -19,6 +20,8 @@ from zippernamechanger import newName, zipFilesInDir
 #
 # # create the csv writer
 # writer = csv.writer(f)
+
+os.system("sudo mount -U 12E2C15FE2C14825 /mnt/SSDdata")
 
 # Create an I2C bus
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -41,13 +44,12 @@ vibrationSensor = AnalogIn(ads2, ADS.P0)
 
 def logger():
     start_time = time.time()
-    with open(newName("/mnt/usb1/data.csv"), "a") as log:
+    with open(newName("/mnt/SSDdata/data.csv"), "a") as log:
         print("1")
-        log.write("{0},{1}\n".format("START", datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
-        zipFilesInDir("/mnt/data", "/mnt/usb1/DataZip.zip", lambda name: 'csv' in name)
-
+        log.write("{0},{1}\n".format("START", datetime.now(timezone('UTC')).astimezone(timezone('Europe/Berlin'))))
+        #zipFilesInDir("/mnt/data", "/mnt/usb1/deZipMetData.zip", lambda name: 'csv' in name)
         # time in seconds, 1440 = 24 hours
-        while time.time() - start_time <= 60:
+        while time.time() - start_time <= 86400:
             log.write("{0},{1}\n".format(currentClamp.voltage, vibrationSensor.voltage))
             # You can enable print for testing purposes
             # print(currentClamp
