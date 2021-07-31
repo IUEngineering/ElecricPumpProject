@@ -5,11 +5,14 @@ import board
 import busio
 import csv
 from datetime import datetime
+import time
 
 # Voor nu van Adafruit binnenkort even zelf aanpassen
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 from adafruit_ads1x15.ads1115 import Mode
+from zippernamechanger import newName, zipFilesInDir
+
 
 # # open the file in the write mode
 # f = open('/mnt/data/', 'w')
@@ -36,13 +39,19 @@ currentClamp = AnalogIn(ads, ADS.P0, ADS.P1)
 vibrationSensor = AnalogIn(ads2, ADS.P0)
 
 
+def logger():
+    start_time = time.time()
+    with open(newName("/mnt/usb1/data.csv"), "a") as log:
+        print("1")
+        log.write("{0},{1}\n".format("START", datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
+        zipFilesInDir("/mnt/data", "/mnt/usb1/DataZip.zip", lambda name: 'csv' in name)
 
-with open("/mnt/data/data.csv", "a") as log:
-    log.write("{0},{1}\n".format("START", datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]))
-    while True:
-        #log.write("{0}\n".format(currentClamp.voltage))
-        log.write("{0}\n".format(vibrationSensor.voltage))
-        print(vibrationSensor.voltage)
-        # You can enable print for testing purposes
-        #print(currentClamp.voltage)
+        # time in seconds, 1440 = 24 hours
+        while time.time() - start_time <= 60:
+            log.write("{0},{1}\n".format(currentClamp.voltage, vibrationSensor.voltage))
+            # You can enable print for testing purposes
+            # print(currentClamp
+            # print(vibrationSensor.voltage)
 
+while True:
+    logger()
