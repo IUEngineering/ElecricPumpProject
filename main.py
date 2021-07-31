@@ -11,11 +11,11 @@ import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 from adafruit_ads1x15.ads1115 import Mode
 
-# open the file in the write mode
-f = open('/mnt/data/testing/test', 'w')
-
-# create the csv writer
-writer = csv.writer(f)
+# # open the file in the write mode
+# f = open('/mnt/data/', 'w')
+#
+# # create the csv writer
+# writer = csv.writer(f)
 
 # Create an I2C bus
 i2c = busio.I2C(board.SCL, board.SDA)
