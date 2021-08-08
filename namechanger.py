@@ -1,6 +1,9 @@
 import os
+import time
 from zipfile import ZipFile
 from os.path import basename
+from pytz import timezone
+from datetime import datetime
 
 def newName(baseName):
     """Checks if baseName exists, if not inserts a running
@@ -26,3 +29,9 @@ def latestName(baseName):
         i+=1
 
     return n.format(i-1)
+
+def addingTime(baseName):
+    timeadded = baseName[:-4]+"-"+("{0}").format(datetime.now(timezone('UTC')).astimezone(timezone('Europe/Berlin')))+baseName[-4:]
+    x = timeadded.replace(":", "_")
+    return x
+
